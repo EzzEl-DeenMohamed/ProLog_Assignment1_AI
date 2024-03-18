@@ -6,8 +6,13 @@ list_orders(Customer, Orders) :-
 % 2
 countOrdersOfCustomer(Customer, Count) :-
     customer(CustomerId, Customer),
-    findall(OrderId, order(CustomerId, OrderId, _), Orders), % need to be change
-    length(Orders, Count).
+    findall(OrderId, order(CustomerId, OrderId, _), Orders),
+    length_Me(Orders, Count).
+
+length_Me([],0).
+length_Me([_|T],R):- 
+    length_Me(T,R1),
+    R is 1 + R1.
 
 % 3
 getItemsInOrderById(Customer, OrderId, Items) :-
@@ -17,8 +22,8 @@ getItemsInOrderById(Customer, OrderId, Items) :-
 % 4
 getNumOfItems(Customer, OrderId, Count) :-
     customer(CustomerId, Customer),
-    order(CustomerId, OrderId, Items),  % need to be change
-    length(Items, Count).
+    order(CustomerId, OrderId, Items), 
+    length_Me(Items, Count).
 
 % 5
 calcPriceOfOrder(Customer, OrderId, TotalPrice) :-
