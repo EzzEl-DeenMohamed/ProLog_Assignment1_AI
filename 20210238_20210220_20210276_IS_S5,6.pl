@@ -1,7 +1,14 @@
 % 1
 list_orders(Customer, Orders) :-
     customer(CustomerId, Customer),
-    findall(order(CustomerId, OrderId, Items), order(CustomerId, OrderId, Items), Orders).  % need to be change
+    list_orders_helper(CustomerId, [], TempOrders),
+    reverse(TempOrders, Orders).
+
+list_orders_helper(CustomerId, AccOrders, Orders) :-
+    order(CustomerId, OrderId, Items),
+    append(AccOrders, [order(CustomerId, OrderId, Items)], NewAccOrders),
+    fail.
+list_orders_helper(_, Orders, Orders).
 
 % 2
 countOrdersOfCustomer(Customer, Count) :-
