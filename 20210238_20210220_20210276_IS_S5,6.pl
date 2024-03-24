@@ -1,14 +1,13 @@
-% 1
-list_orders(Customer, Orders) :-
-    customer(CustomerId, Customer),
-    list_orders_helper(CustomerId, [], TempOrders),
-    reverse(TempOrders, Orders).
+% Rule to find orders for a specific customer
+list_orders(CustomerName, Orders) :-
+    customer(CustomerID, CustomerName),
+    list_customer_orders(CustomerID, Orders).
 
-list_orders_helper(CustomerId, AccOrders, Orders) :-
-    order(CustomerId, OrderId, Items),
-    append(AccOrders, [order(CustomerId, OrderId, Items)], NewAccOrders),
-    fail.
-list_orders_helper(_, Orders, Orders).
+% Helper rule to find orders for a specific customer
+list_customer_orders(CustomerID, [Order]) :-
+    order(CustomerID, _, Order).
+    
+list_customer_orders(_, []).
 
 % 2
 countOrdersOfCustomer(Customer, Count) :-
